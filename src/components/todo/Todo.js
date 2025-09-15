@@ -1,5 +1,5 @@
 
-import './styles.css'
+
 
 import getTodoTemplate from "./template";
 

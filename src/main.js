@@ -1,3 +1,5 @@
+import './style.css'
+
 import Todolist from "./components/todoList/TodoList";
 
 
