@@ -18,4 +18,10 @@ export default class Todolist {
   render() {
     this.domElt.innerHTML = getTodoListTemplate(this);
   }
+
+
+  getItemsLeftCount () {
+  return this.todos.filter((todo) => !todo.completed).length;
+  }
 }
+
