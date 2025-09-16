@@ -1,10 +1,12 @@
-import getTodoListTemplate from "./template";
+
+import getTemplate from "./template";
 import Todo from "../todo/Todo";
 import DB from "../../DB";
 
 export default class Todolist {
   constructor(data) {
     this.domElt = document.querySelector(data.elt);
+    this.newTodo = null;
     DB.setApiURL(data.apiURL);
     this.todos = [];
     this.loadTodos();
@@ -16,12 +18,38 @@ export default class Todolist {
     this.render();
   }
   render() {
-    this.domElt.innerHTML = getTodoListTemplate(this);
+    this.domElt.innerHTML = getTemplate(this);
   }
 
+  getItemsLeftCount() {
+    return this.todos.filter((todo) => !todo.completed).length;
+  }
 
-  getItemsLeftCount () {
-  return this.todos.filter((todo) => !todo.completed).length;
+  addItemsInTodos(data) {
+    this.newTodo = new Todo(data);
+    this.todos.push(this.newTodo);
+  }
+
+  addItemInDom () {
+    // Ajouter son render dans le DOM
+    const todoListeElt = this.domElt.querySelector('[role="todo-list"]');
+    const newLi = document.createElement('div');
+    todoListeElt.append(newLi);
+    newLi.outerHTML = this.newTodo.render();
+  }
+
+  renderItemsLeftCount() {
+    this.domElt.querySelector('[role="todo-count"] span').innerText = this.getItemsLeftCount();
+  }
+
+  async addTodo(input) {
+    // Ajouter dans la DB distante
+    const todo = await DB.create(input.value);
+
+    this.addItemsInTodos(todo);
+    this.addItemInDom();
+    this.renderItemsLeftCount();
+
+    input.value = ""
   }
 }
-

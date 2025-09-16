@@ -1,6 +1,3 @@
-
-
-
 import getTodoTemplate from "./template";
 
 export default class Todo {
