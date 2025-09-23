@@ -5,7 +5,8 @@ export default function getTodoTemplate(todo) {
             <li data-id="${todo.id}" class="${todo.completed ? "completed" : ""}">
             <div class="view">
               <input class="toggle" type="checkbox" ${
-                todo.completed ? "checked" : ""} 
+                todo.completed ? "checked" : ""}
+                onchange="window.todoList.toggleCompletedOneById(${todo.id})"
                 />
               <label>${todo.content}</label>
               <button class="destroy" onclick="window.todoList.deleteOneById(${todo.id})"></button>

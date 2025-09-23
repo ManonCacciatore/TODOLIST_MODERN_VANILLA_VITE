@@ -20,12 +20,24 @@ export default class DB {
     return response.json();
   }
 
-
-
-    static async deleteOneById(id) {
+   static async deleteOneById(id) {
     const response = await fetch(this.apiURL + "todos/" + id, {
       method: "DELETE",
     });
     return response;
   }
+
+  static async updateOne(todo) {
+    const response = await fetch(this.apiURL + "todos/" + todo.id, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        content: todo.content,
+        completed: todo.completed,
+      }),
+    });
+    return response;
+  }
+
+
 }
